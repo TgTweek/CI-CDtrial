@@ -57,7 +57,6 @@
             justify-content: flex-start;
         }
         .task-bar {
-            background-color: #60a5fa;
             color: white;
             padding: 0.5rem;
             border-radius: 0.5rem;
@@ -69,6 +68,13 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease-in-out;
+        }
+        /* Visual spacing for alternating rows */
+        .gantt-chart-row:nth-child(odd) > .task-name {
+            background-color: #f1f5f9;
+        }
+        .gantt-chart-row:nth-child(even) > .task-name {
+            background-color: #e2e8f0;
         }
         .week-label {
             text-align: center;
@@ -107,61 +113,61 @@
         <!-- Aktivitet 1: Indsamle krav (2 uger, starter i uge 1) -->
         <div class="gantt-chart-row">
             <div class="task-name">1. Indsamle krav</div>
-            <div class="task-bar bg-green-500" style="grid-column: 2 / span 2;">2 uger</div>
+            <div class="task-bar" style="background-color: #f87171; grid-column: 2 / span 2;">2 uger</div>
         </div>
 
         <!-- Aktivitet 2: Analysere processer (3 uger, starter i uge 3, efter aktivitet 1) -->
         <div class="gantt-chart-row">
             <div class="task-name">2. Analysere processer</div>
-            <div class="task-bar bg-green-500" style="grid-column: 4 / span 3;">3 uger</div>
+            <div class="task-bar" style="background-color: #fb923c; grid-column: 4 / span 3;">3 uger</div>
         </div>
 
         <!-- Aktivitet 3: Analysere data (3 uger, starter i uge 6, efter aktivitet 2) -->
         <div class="gantt-chart-row">
             <div class="task-name">3. Analysere data</div>
-            <div class="task-bar bg-green-500" style="grid-column: 7 / span 3;">3 uger</div>
+            <div class="task-bar" style="background-color: #34d399; grid-column: 7 / span 3;">3 uger</div>
         </div>
 
         <!-- Aktivitet 4: Design processer (7 uger, starter i uge 6, efter aktivitet 2) -->
         <div class="gantt-chart-row">
             <div class="task-name">4. Design processer</div>
-            <div class="task-bar bg-green-500" style="grid-column: 7 / span 7;">7 uger</div>
+            <div class="task-bar" style="background-color: #60a5fa; grid-column: 7 / span 7;">7 uger</div>
         </div>
 
         <!-- Aktivitet 5: Design data (6 uger, starter i uge 6, efter aktivitet 2) -->
         <div class="gantt-chart-row">
             <div class="task-name">5. Design data</div>
-            <div class="task-bar bg-green-500" style="grid-column: 7 / span 6;">6 uger</div>
+            <div class="task-bar" style="background-color: #c084fc; grid-column: 7 / span 6;">6 uger</div>
         </div>
 
         <!-- Aktivitet 6: Designe skærmbilleder (1 uge, starter i uge 14, efter aktivitet 3 og 4) -->
         <div class="gantt-chart-row">
             <div class="task-name">6. Designe skærmbilleder</div>
-            <div class="task-bar bg-green-500" style="grid-column: 14 / span 1;">1 uge</div>
+            <div class="task-bar" style="background-color: #f87171; grid-column: 14 / span 1;">1 uge</div>
         </div>
 
         <!-- Aktivitet 7: Designe rapporter (5 uger, starter i uge 14, efter aktivitet 4 og 5) -->
         <div class="gantt-chart-row">
             <div class="task-name">7. Designe rapporter</div>
-            <div class="task-bar bg-green-500" style="grid-column: 14 / span 5;">5 uger</div>
+            <div class="task-bar" style="background-color: #fb923c; grid-column: 14 / span 5;">5 uger</div>
         </div>
 
         <!-- Aktivitet 8: Programmering (4 uger, starter i uge 19, efter aktivitet 6 og 7) -->
         <div class="gantt-chart-row">
             <div class="task-name">8. Programmering</div>
-            <div class="task-bar bg-green-500" style="grid-column: 19 / span 4;">4 uger</div>
+            <div class="task-bar" style="background-color: #34d399; grid-column: 19 / span 4;">4 uger</div>
         </div>
 
         <!-- Aktivitet 9: Test (8 uger, starter i uge 19, efter aktivitet 7) -->
         <div class="gantt-chart-row">
             <div class="task-name">9. Test</div>
-            <div class="task-bar bg-green-500" style="grid-column: 19 / span 8;">8 uger</div>
+            <div class="task-bar" style="background-color: #60a5fa; grid-column: 19 / span 8;">8 uger</div>
         </div>
 
         <!-- Aktivitet 10: Installation (2 uger, starter i uge 27, efter aktivitet 8 og 9) -->
         <div class="gantt-chart-row">
             <div class="task-name">10. Installation</div>
-            <div class="task-bar bg-green-500" style="grid-column: 27 / span 2;">2 uger</div>
+            <div class="task-bar" style="background-color: #c084fc; grid-column: 27 / span 2;">2 uger</div>
         </div>
     </div>
 </div>
