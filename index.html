@@ -4,173 +4,365 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gantt-diagram for IT-udviklingsforløb</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
-            color: #334155;
-            padding: 2rem;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background-color: #ffffff;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .gantt-chart {
-            display: grid;
-            grid-template-columns: 200px repeat(30, minmax(30px, 1fr));
-            gap: 1.5rem;
-            padding: 1rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.75rem;
-            overflow-x: auto;
-        }
-        .gantt-chart-header {
-            display: contents;
-        }
-        .gantt-chart-header .cell {
-            font-weight: bold;
-            text-align: center;
-            background-color: #cbd5e1;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-        }
-        .gantt-chart-row {
-            display: contents;
-        }
-        .task-name {
-            font-weight: 500;
-            padding: 0.5rem;
-            background-color: #f8fafc;
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
-        .task-bar {
+        
+        header {
+            background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
             color: white;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
+            padding: 25px;
             text-align: center;
-            grid-column: span var(--duration);
-            margin-right: 0.25rem;
-            height: 100%;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .duration-info {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .gantt-container {
+            overflow-x: auto;
+            padding: 20px;
+        }
+        
+        .gantt-grid {
+            display: grid;
+            grid-template-columns: 250px repeat(27, 1fr);
+            gap: 5px;
+            min-width: 1000px;
+        }
+        
+        .grid-header {
+            background-color: #34495e;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            position: sticky;
+            left: 0;
+        }
+        
+        .grid-week {
+            background-color: #ecf0f1;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 1px solid #bdc3c7;
+        }
+        
+        .task-name {
+            background-color: #f8f9fa;
+            padding: 15px;
+            font-weight: 500;
+            border-left: 4px solid #3498db;
+            position: sticky;
+            left: 0;
+        }
+        
+        .task-duration {
+            background-color: #e8f4fc;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .task-dependency {
+            background-color: #fff3e0;
+            padding: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .gantt-bar-container {
+            grid-column: 2 / span 27;
+            display: grid;
+            grid-template-columns: repeat(27, 1fr);
+            gap: 2px;
+            height: 40px;
+        }
+        
+        .gantt-bar {
+            background-color: #3498db;
+            border-radius: 4px;
+            margin: 8px 0;
+            grid-column: var(--start) / span var(--duration);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease-in-out;
-        }
-        /* Visual spacing for alternating rows */
-        .gantt-chart-row:nth-child(odd) > .task-name {
-            background-color: #f1f5f9;
-        }
-        .gantt-chart-row:nth-child(even) > .task-name {
-            background-color: #e2e8f0;
-        }
-        .week-label {
-            text-align: center;
+            color: white;
             font-weight: bold;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .activity-1 { background-color: #3498db; }
+        .activity-2 { background-color: #2ecc71; }
+        .activity-3 { background-color: #e74c3c; }
+        .activity-4 { background-color: #f39c12; }
+        .activity-5 { background-color: #9b59b6; }
+        .activity-6 { background-color: #1abc9c; }
+        .activity-7 { background-color: #d35400; }
+        .activity-8 { background-color: #c0392b; }
+        .activity-9 { background-color: #16a085; }
+        .activity-10 { background-color: #8e44ad; }
+        
+        .empty-cell {
+            background-color: #f8f9fa;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        
+        .critical-path {
+            background-color: #ff5252;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin: 20px auto;
+            text-align: center;
+            max-width: 600px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .gantt-grid {
+                gap: 3px;
+            }
+            
+            .task-name, .task-duration, .task-dependency, .grid-week {
+                padding: 10px 8px;
+                font-size: 0.9rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-100">
-
-<div class="container">
-    <div class="header">
-        <h1 class="text-4xl font-bold mb-2 text-gray-800">Gantt-diagram for IT-udviklingsforløb</h1>
-        <p class="text-lg text-gray-600">Visualisering af projektplan baseret på de angivne aktiviteter.</p>
-        <p class="mt-4 font-bold text-gray-800">Projektet kan tidligst være færdigt efter 20 uger.</p>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gantt-diagram for IT-udviklingsforløb</h1>
+            <p class="subtitle">Visualisering af projektplan baseret på de angivne aktiviteter</p>
+        </header>
+        
+        <div class="duration-info">
+            Projektet kan tidligst være færdigt efter 27 uger
+        </div>
+        
+        <div class="critical-path">
+            Kritisk sti: Aktivitet 1 → Aktivitet 2 → Aktivitet 4 → Aktivitet 7 → Aktivitet 9 → Aktivitet 10
+        </div>
+        
+        <div class="gantt-container">
+            <div class="gantt-grid">
+                <!-- Header Row -->
+                <div class="grid-header">Aktivitet</div>
+                <!-- Week headers -->
+                <div class="grid-week">1</div>
+                <div class="grid-week">2</div>
+                <div class="grid-week">3</div>
+                <div class="grid-week">4</div>
+                <div class="grid-week">5</div>
+                <div class="grid-week">6</div>
+                <div class="grid-week">7</div>
+                <div class="grid-week">8</div>
+                <div class="grid-week">9</div>
+                <div class="grid-week">10</div>
+                <div class="grid-week">11</div>
+                <div class="grid-week">12</div>
+                <div class="grid-week">13</div>
+                <div class="grid-week">14</div>
+                <div class="grid-week">15</div>
+                <div class="grid-week">16</div>
+                <div class="grid-week">17</div>
+                <div class="grid-week">18</div>
+                <div class="grid-week">19</div>
+                <div class="grid-week">20</div>
+                <div class="grid-week">21</div>
+                <div class="grid-week">22</div>
+                <div class="grid-week">23</div>
+                <div class="grid-week">24</div>
+                <div class="grid-week">25</div>
+                <div class="grid-week">26</div>
+                <div class="grid-week">27</div>
+                
+                <!-- Aktivitet 1 -->
+                <div class="task-name">1. Indsamle krav</div>
+                <div class="task-duration">2 uger</div>
+                <div class="task-dependency">Ingen</div>
+                <div class="gantt-bar-container">
+                    <div class="gantt-bar activity-1" style="--start: 1; --duration: 2;">2 uger</div>
+                </div>
+                
+                <!-- Aktivitet 2 -->
+                <div class="task-name">2. Analysere processer</div>
+                <div class="task-duration">3 uger</div>
+                <div class="task-dependency">Aktivitet 1</div>
+                <div class="gantt-bar-container">
+                    <div class="gantt-bar activity-2" style="--start: 3; --duration: 3;">3 uger</div>
+                </div>
+                
+                <!-- Aktivitet 3 -->
+                <div class="task-name">3. Analysere data</div>
+                <div class="task-duration">3 uger</div>
+                <div class="task-dependency">Aktivitet 2</div>
+                <div class="gantt-bar-container">
+                    <div class="gantt-bar activity-3" style="--start: 6; --duration: 3;">3 uger</div>
+                </div>
+                
+                <!-- Aktivitet 4 -->
+                <div class="task-name">4. Design processer</div>
+                <div class="task-duration">7 uger</div>
+                <div class="task-dependency">Aktivitet 2</div>
+                <div class="gantt-bar-container">
+                    <div class="gantt-bar activity-4" style="--start: 6; --duration: 7;">7 uger</div>
+                </div>
+                
+                <!-- Aktivitet 5 -->
+                <div class="task-name">5. Design data</div>
+                <div class="task-duration">6 uger</div>
+                <div class="task-dependency">Aktivitet 2</div>
+                <div class="gantt-bar-container">
+                    <div class="gantt-bar activity-5" style="--start: 6; --duration: 6;">6 uger</div>
+                </div>
+                
+                <!-- Aktivitet 6 -->
+                <div class="task-name">6. Designe skærmbilleder</div>
+                <div class="task-duration">1 uge</div>
+                <div class="task-dependency">Aktivitet 3, 4</div>
+                <div class="gantt-bar-container">
+                    <div class="gantt-bar activity-6" style="--start: 13; --duration: 1;">1 uge</div>
+                </div>
+                
+                <!-- Aktivitet 7 -->
+                <div class="task-name">7. Designe rapporter</div>
+                <div class="task-duration">5 uger</div>
+                <div class="task-dependency">Aktivitet 4, 5</div>
+                <div class="gantt-bar-container">
+                    <div class="gantt-bar activity-7" style="--start: 13; --duration: 5;">5 uger</div>
+                </div>
+                
+                <!-- Aktivitet 8 -->
+                <div class="task-name">8. Programmering</div>
+                <div class="task-duration">4 uger</div>
+                <div class="task-dependency">Aktivitet 6, 7</div>
+                <div class="gantt-bar-container">
+                    <div class="gantt-bar activity-8" style="--start: 18; --duration: 4;">4 uger</div>
+                </div>
+                
+                <!-- Aktivitet 9 -->
+                <div class="task-name">9. Test</div>
+                <div class="task-duration">8 uger</div>
+                <div class="task-dependency">Aktivitet 7</div>
+                <div class="gantt-bar-container">
+                    <div class="gantt-bar activity-9" style="--start: 18; --duration: 8;">8 uger</div>
+                </div>
+                
+                <!-- Aktivitet 10 -->
+                <div class="task-name">10. Installation</div>
+                <div class="task-duration">2 uger</div>
+                <div class="task-dependency">Aktivitet 8, 9</div>
+                <div class="gantt-bar-container">
+                    <div class="gantt-bar activity-10" style="--start: 26; --duration: 2;">2 uger</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color activity-1"></div>
+                <span>Aktivitet 1: Indsamle krav</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color activity-2"></div>
+                <span>Aktivitet 2: Analysere processer</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color activity-3"></div>
+                <span>Aktivitet 3: Analysere data</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color activity-4"></div>
+                <span>Aktivitet 4: Design processer</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color activity-5"></div>
+                <span>Aktivitet 5: Design data</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color activity-6"></div>
+                <span>Aktivitet 6: Designe skærmbilleder</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color activity-7"></div>
+                <span>Aktivitet 7: Designe rapporter</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color activity-8"></div>
+                <span>Aktivitet 8: Programmering</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color activity-9"></div>
+                <span>Aktivitet 9: Test</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color activity-10"></div>
+                <span>Aktivitet 10: Installation</span>
+            </div>
+        </div>
     </div>
-
-    <div class="gantt-chart">
-        <!-- Gantt Chart Header -->
-        <div class="gantt-chart-header">
-            <div class="cell bg-slate-300">Aktivitet</div>
-            <!-- Dynamic week labels -->
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const chart = document.querySelector('.gantt-chart');
-                    for (let i = 1; i <= 30; i++) {
-                        const weekDiv = document.createElement('div');
-                        weekDiv.className = 'cell bg-slate-300 week-label';
-                        weekDiv.textContent = `Uge ${i}`;
-                        chart.appendChild(weekDiv);
-                    }
-                });
-            </script>
-        </div>
-
-        <!-- Gantt Chart Rows -->
-        <!-- Aktivitet 1: Indsamle krav (2 uger, starter i uge 1) -->
-        <div class="gantt-chart-row">
-            <div class="task-name">1. Indsamle krav</div>
-            <div class="task-bar" style="background-color: #f87171; grid-column: 2 / span 2;">2 uger</div>
-        </div>
-
-        <!-- Aktivitet 2: Analysere processer (3 uger, starter i uge 3, efter aktivitet 1) -->
-        <div class="gantt-chart-row">
-            <div class="task-name">2. Analysere processer</div>
-            <div class="task-bar" style="background-color: #fb923c; grid-column: 4 / span 3;">3 uger</div>
-        </div>
-
-        <!-- Aktivitet 3: Analysere data (3 uger, starter i uge 6, efter aktivitet 2) -->
-        <div class="gantt-chart-row">
-            <div class="task-name">3. Analysere data</div>
-            <div class="task-bar" style="background-color: #34d399; grid-column: 7 / span 3;">3 uger</div>
-        </div>
-
-        <!-- Aktivitet 4: Design processer (7 uger, starter i uge 6, efter aktivitet 2) -->
-        <div class="gantt-chart-row">
-            <div class="task-name">4. Design processer</div>
-            <div class="task-bar" style="background-color: #60a5fa; grid-column: 7 / span 7;">7 uger</div>
-        </div>
-
-        <!-- Aktivitet 5: Design data (6 uger, starter i uge 6, efter aktivitet 2) -->
-        <div class="gantt-chart-row">
-            <div class="task-name">5. Design data</div>
-            <div class="task-bar" style="background-color: #c084fc; grid-column: 7 / span 6;">6 uger</div>
-        </div>
-
-        <!-- Aktivitet 6: Designe skærmbilleder (1 uge, starter i uge 14, efter aktivitet 3 og 4) -->
-        <div class="gantt-chart-row">
-            <div class="task-name">6. Designe skærmbilleder</div>
-            <div class="task-bar" style="background-color: #f87171; grid-column: 14 / span 1;">1 uge</div>
-        </div>
-
-        <!-- Aktivitet 7: Designe rapporter (5 uger, starter i uge 14, efter aktivitet 4 og 5) -->
-        <div class="gantt-chart-row">
-            <div class="task-name">7. Designe rapporter</div>
-            <div class="task-bar" style="background-color: #fb923c; grid-column: 14 / span 5;">5 uger</div>
-        </div>
-
-        <!-- Aktivitet 8: Programmering (4 uger, starter i uge 19, efter aktivitet 6 og 7) -->
-        <div class="gantt-chart-row">
-            <div class="task-name">8. Programmering</div>
-            <div class="task-bar" style="background-color: #34d399; grid-column: 19 / span 4;">4 uger</div>
-        </div>
-
-        <!-- Aktivitet 9: Test (8 uger, starter i uge 19, efter aktivitet 7) -->
-        <div class="gantt-chart-row">
-            <div class="task-name">9. Test</div>
-            <div class="task-bar" style="background-color: #60a5fa; grid-column: 19 / span 8;">8 uger</div>
-        </div>
-
-        <!-- Aktivitet 10: Installation (2 uger, starter i uge 27, efter aktivitet 8 og 9) -->
-        <div class="gantt-chart-row">
-            <div class="task-name">10. Installation</div>
-            <div class="task-bar" style="background-color: #c084fc; grid-column: 27 / span 2;">2 uger</div>
-        </div>
-    </div>
-</div>
-
 </body>
 </html>
