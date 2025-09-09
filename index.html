@@ -1,31 +1,51 @@
 <!DOCTYPE html>
-<html lang="da">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Pjækkerøv</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #ff4e50, #fc913a);
-      font-family: Arial, sans-serif;
-    }
-
-    h1 {
-      color: white;
-      font-size: 3rem;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 20px 40px;
-      border-radius: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      text-align: center;
-    }
-  </style>
+    <title>Gantt Diagram</title>
+    <style>
+        .gantt-container {
+            display: grid;
+            grid-template-columns: 150px repeat(27, 25px); /* En kolonne for opgavens navn og 27 uger */
+            grid-auto-rows: 40px; /* Højden på hver række */
+            gap: 5px;
+            font-family: Arial, sans-serif;
+        }
+        .task-name {
+            grid-column: 1;
+            text-align: right;
+            padding-right: 10px;
+        }
+        .task-bar {
+            background-color: #4A90E2;
+            border-radius: 5px;
+            height: 20px;
+            margin-top: 10px;
+        }
+        .week-header {
+            text-align: center;
+            font-weight: bold;
+        }
+        .week-number {
+            grid-column: 2 / span 1; /* For uge 1 */
+        }
+        /* Eksempel på en opgave */
+        .task-1 {
+            grid-column: 2 / span 2; /* Starter i uge 2, strækker sig over 2 uger */
+            background-color: #5DADE2;
+        }
+    </style>
 </head>
 <body>
-  <h1>Daniel er en pjækkerøv 😴</h1>
+
+    <h2>Projekt Tidsplan</h2>
+    <div class="gantt-container">
+        <div class="week-header" style="grid-column: 2 / span 1;">1</div>
+        <div class="week-header" style="grid-column: 3 / span 1;">2</div>
+        <div class="week-header" style="grid-column: 4 / span 1;">3</div>
+        <div class="task-name">Indsamle krav</div>
+        <div class="task-bar task-1"></div>
+
+        </div>
+
 </body>
 </html>
