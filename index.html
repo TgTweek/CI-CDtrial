@@ -27,8 +27,8 @@
         }
         .gantt-chart {
             display: grid;
-            grid-template-columns: 200px repeat(20, minmax(30px, 1fr));
-            gap: 0.5rem;
+            grid-template-columns: 200px repeat(30, minmax(30px, 1fr));
+            gap: 1.5rem;
             padding: 1rem;
             border: 1px solid #e2e8f0;
             border-radius: 0.75rem;
@@ -93,7 +93,7 @@
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
                     const chart = document.querySelector('.gantt-chart');
-                    for (let i = 1; i <= 20; i++) {
+                    for (let i = 1; i <= 30; i++) {
                         const weekDiv = document.createElement('div');
                         weekDiv.className = 'cell bg-slate-300 week-label';
                         weekDiv.textContent = `Uge ${i}`;
@@ -146,7 +146,7 @@
             <div class="task-bar bg-green-500" style="grid-column: 14 / span 5;">5 uger</div>
         </div>
 
-        <!-- Aktivitet 8: Programmering (4 uger, starter i uge 15, efter aktivitet 6 og 7) -->
+        <!-- Aktivitet 8: Programmering (4 uger, starter i uge 19, efter aktivitet 6 og 7) -->
         <div class="gantt-chart-row">
             <div class="task-name">8. Programmering</div>
             <div class="task-bar bg-green-500" style="grid-column: 19 / span 4;">4 uger</div>
